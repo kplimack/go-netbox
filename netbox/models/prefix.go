@@ -667,3 +667,13 @@ func (m *PrefixStatus) UnmarshalBinary(b []byte) error {
 	*m = res
 	return nil
 }
+
+func (m *PrefixStatus) UnmarshalJSON(data []byte) error {
+	var tmp int
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+	*m.Value = string(strconv.Itoa(tmp))
+
+	return nil
+}
