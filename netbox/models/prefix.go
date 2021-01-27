@@ -531,7 +531,7 @@ type PrefixStatus struct {
 	// value
 	// Required: true
 	// Enum: [container active reserved deprecated]
-	Value *string `json:"value"`
+	Value *json.Number `json:"value"`
 }
 
 // Validate validates this prefix status
@@ -638,12 +638,12 @@ func (m *PrefixStatus) validateValueEnum(path, location string, value string) er
 
 func (m *PrefixStatus) validateValue(formats strfmt.Registry) error {
 
-	if err := validate.Required("status"+"."+"value", "body", m.Value); err != nil {
+	if err := validate.Required("status"+"."+"value", "body", m.Value.String()); err != nil {
 		return err
 	}
 
 	// value enum
-	if err := m.validateValueEnum("status"+"."+"value", "body", *m.Value); err != nil {
+	if err := m.validateValueEnum("status"+"."+"value", "body", m.Value.String()); err != nil {
 		return err
 	}
 
@@ -665,15 +665,5 @@ func (m *PrefixStatus) UnmarshalBinary(b []byte) error {
 		return err
 	}
 	*m = res
-	return nil
-}
-
-func (m *PrefixStatus) UnmarshalJSON(data []byte) error {
-	var tmp int
-	if err := json.Unmarshal(data, &tmp); err != nil {
-		return err
-	}
-	*m.Value = string(strconv.Itoa(tmp))
-
 	return nil
 }

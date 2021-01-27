@@ -29,6 +29,7 @@ import (
 
 // New creates a new ipam API client.
 func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
+	panic("jake attack")
 	return &Client{transport: transport, formats: formats}
 }
 
